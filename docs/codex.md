@@ -61,6 +61,7 @@ Why these names?
 
 - `manus-brainstorm` does not create `task_plan.md`, `findings.md`, or `progress.md`.
 - `manus-plan` uses a soft gate: if there is no recent `Brainstorm Summary`, it recommends `/manus-brainstorm` first and asks whether to continue before creating planning files.
+- `manus-plan` is a thin wrapper around the internal `planning-with-files` skill, similar to the soft command style used by Claude command entrypoints.
 - `planning-with-files` remains available as the internal planning skill, but it is no longer the recommended direct Codex entrypoint.
 
 ## Explicit Invocation

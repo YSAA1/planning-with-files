@@ -33,5 +33,4 @@ Workflow:
 - Constraints:
 - Risks:
 - Recommended next step:
-
 Do not write any planning files during brainstorming.

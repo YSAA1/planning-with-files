@@ -68,7 +68,7 @@ class CodexManusCommandTests(unittest.TestCase):
         self.assertIn("Do not create `findings.md`", body)
         self.assertIn("Do not create `progress.md`", body)
 
-    def test_manus_plan_uses_soft_gate(self):
+    def test_manus_plan_is_a_soft_wrapper_not_a_copied_skill_body(self):
         body = read_text(CODEX_SKILLS / "manus-plan" / "SKILL.md")
         config = read_text(CODEX_SKILLS / "manus-plan" / "agents" / "openai.yaml")
 
@@ -76,7 +76,10 @@ class CodexManusCommandTests(unittest.TestCase):
         self.assertIn("Brainstorm Summary", body)
         self.assertIn("If there is no recent Brainstorm Summary", body)
         self.assertIn("ask the user whether to continue", body)
-        self.assertIn("Do not create any planning files until the user confirms", body)
+        self.assertIn("Invoke the `planning-with-files` skill", body)
+        self.assertIn("follow it exactly as presented", body)
+        self.assertNotIn("# Planning with Files", body)
+        self.assertNotIn("templates/task_plan.md", body)
 
     def test_manus_status_reuses_planning_status_behavior(self):
         body = read_text(CODEX_SKILLS / "manus-status" / "SKILL.md")
