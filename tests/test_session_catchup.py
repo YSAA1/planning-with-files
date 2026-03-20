@@ -142,6 +142,10 @@ class SessionCatchupCodexTests(unittest.TestCase):
     def test_codex_primary_session_accepts_string_source(self):
         self.assertTrue(self.module.is_codex_primary_session({"source": "cli"}))
 
+    def test_sanitize_project_path_preserves_leading_dash_for_absolute_paths(self):
+        sanitized = self.module.sanitize_project_path("/tmp/project")
+        self.assertEqual("-tmp-project", sanitized)
+
     def test_codex_scan_for_planning_update_detects_exec_command_write(self):
         session_path = self.create_session(
             "2026/03/20/rollout-exec-write.jsonl",

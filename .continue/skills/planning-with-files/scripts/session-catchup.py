@@ -47,8 +47,6 @@ def sanitize_project_path(project_path: str) -> str:
     """Convert a project path to Claude's sanitized storage directory name."""
     sanitized = normalize_path(project_path).replace("\\", "-").replace("/", "-").replace(":", "-")
     sanitized = sanitized.replace("_", "-")
-    if sanitized.startswith("-"):
-        sanitized = sanitized[1:]
     return sanitized
 
 
