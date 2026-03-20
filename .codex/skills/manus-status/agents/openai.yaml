@@ -1,0 +1,5 @@
+interface:
+  display_name: "Manus Status"
+  short_description: "Show planning-with-files progress without using Codex built-in /status."
+policy:
+  allow_implicit_invocation: false

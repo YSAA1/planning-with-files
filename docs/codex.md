@@ -2,7 +2,13 @@
 
 ## Overview
 
-planning-with-files works with Codex as a personal skill in `~/.codex/skills/`.
+planning-with-files works best with Codex as an explicit, slash-friendly workflow in `~/.codex/skills/` or your repository's `.codex/skills/` directory.
+
+For Codex, this repo now ships two layers:
+- `planning-with-files` — internal planning workflow skill
+- `manus-brainstorm`, `manus-plan`, `manus-status` — explicit user-facing Codex entrypoints
+
+The Codex-facing skills set `allow_implicit_invocation: false` in `agents/openai.yaml`, so Codex does not jump directly into plan-file creation just because a prompt looks complex.
 
 ## Installation
 
@@ -10,69 +16,69 @@ Codex auto-discovers skills from `.codex/skills/` directories. Two installation 
 
 ### Method 1: Workspace Installation (Recommended)
 
-Share the skill with your entire team by adding it to your repository:
+Share the Codex workflow with your entire team by committing the repo's `.codex/` directory:
 
 ```bash
 # In your project repository
 git clone https://github.com/OthmanAdi/planning-with-files.git /tmp/planning-with-files
 
-# Copy the Codex skill to your repo
+# Copy the Codex integration to your repo
 cp -r /tmp/planning-with-files/.codex .
 
 # Commit to share with team
 git add .codex/
-git commit -m "Add planning-with-files skill for Codex"
+git commit -m "Add planning-with-files Codex workflow"
 git push
 
 # Clean up
 rm -rf /tmp/planning-with-files
 ```
 
-Now everyone on your team using Codex will have access to the skill!
-
 ### Method 2: Personal Installation
 
-Install just for yourself:
+Install the Codex skills just for yourself:
 
 ```bash
-# Clone the repo
 git clone https://github.com/OthmanAdi/planning-with-files.git /tmp/planning-with-files
-
-# Copy to your personal Codex skills folder
 mkdir -p ~/.codex/skills
-cp -r /tmp/planning-with-files/.codex/skills/planning-with-files ~/.codex/skills/
-
-# Clean up
+cp -r /tmp/planning-with-files/.codex/skills/* ~/.codex/skills/
 rm -rf /tmp/planning-with-files
 ```
 
-## Usage with Superpowers
+## Recommended Codex Workflow
 
-If you have [obra/superpowers](https://github.com/obra/superpowers) installed:
+Use the explicit Codex commands in this order:
 
-```bash
-~/.codex/superpowers/.codex/superpowers-codex use-skill planning-with-files
-```
+1. `/manus-brainstorm` — discuss the task before any planning files are created
+2. `/manus-plan` — enter the planning-with-files workflow after brainstorming or after explicit confirmation
+3. `/manus-status` — inspect the current plan-file state
 
-## Usage without Superpowers
+Why these names?
+- Codex already has built-in `/plan`, `/plan-mode`, and `/status` commands.
+- The `manus-*` names avoid collisions with native Codex commands in both CLI and app surfaces.
 
-Add to your `~/.codex/AGENTS.md`:
+## Behavior Notes
 
-```markdown
-## Planning with Files
+- `manus-brainstorm` does not create `task_plan.md`, `findings.md`, or `progress.md`.
+- `manus-plan` uses a soft gate: if there is no recent `Brainstorm Summary`, it recommends `/manus-brainstorm` first and asks whether to continue before creating planning files.
+- `planning-with-files` remains available as the internal planning skill, but it is no longer the recommended direct Codex entrypoint.
 
-<IMPORTANT>
-For complex tasks (3+ steps, research, projects):
-1. Read skill: `cat ~/.codex/skills/planning-with-files/SKILL.md`
-2. Create task_plan.md, findings.md, progress.md in your project directory
-3. Follow 3-file pattern throughout the task
-</IMPORTANT>
-```
+## Explicit Invocation
+
+If you prefer explicit skill invocation instead of slash commands:
+
+- `$manus-brainstorm`
+- `$manus-plan`
+- `$manus-status`
+
+Enabled skills also appear in Codex's slash command list, so most users can just type `/` and filter by `manus`.
 
 ## Verification
 
 ```bash
-ls -la ~/.codex/skills/planning-with-files/SKILL.md
+ls -la ~/.codex/skills/manus-brainstorm/SKILL.md
+ls -la ~/.codex/skills/manus-plan/SKILL.md
+ls -la ~/.codex/skills/manus-status/SKILL.md
 ```
 
 ## Learn More

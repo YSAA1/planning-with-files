@@ -1,7 +1,7 @@
 ---
-name: planning-with-files
-description: Implements Manus-style file-based planning to organize and track progress on complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when asked to plan out, break down, or organize a multi-step project, research task, or any work requiring >5 tool calls. Supports automatic session recovery after /clear.
-user-invocable: false
+name: manus-plan
+description: Codex explicit planning entrypoint. Start the planning-with-files workflow only after brainstorming or after explicit user confirmation.
+user-invocable: true
 allowed-tools: "Read, Write, Edit, Bash, Glob, Grep"
 hooks:
   UserPromptSubmit:
@@ -25,6 +25,19 @@ hooks:
 metadata:
   version: "2.23.0"
 ---
+# Manus Plan
+
+Use this Codex-specific command as the explicit entrypoint into the planning-with-files workflow.
+
+Before creating any planning files:
+1. Look for a recent `Brainstorm Summary` in the current conversation.
+2. If there is no recent Brainstorm Summary:
+   - Explain that `/manus-brainstorm` is recommended before planning.
+   - Briefly explain that planning will create `task_plan.md`, `findings.md`, and `progress.md`.
+   - ask the user whether to continue.
+   - Do not create any planning files until the user confirms.
+3. If there is a recent Brainstorm Summary, use it as the source of truth for the initial goal, success criteria, constraints, and recommended approach.
+4. Then follow the planning-with-files workflow below exactly.
 
 # Planning with Files
 

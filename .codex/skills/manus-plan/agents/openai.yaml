@@ -1,0 +1,5 @@
+interface:
+  display_name: "Manus Plan"
+  short_description: "Start planning-with-files after brainstorming or explicit confirmation."
+policy:
+  allow_implicit_invocation: false
