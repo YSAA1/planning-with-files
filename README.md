@@ -175,6 +175,13 @@ For Codex, use the explicit `manus-*` slash commands instead of relying on impli
 
 The Codex-facing skills set `allow_implicit_invocation: false`, so Codex does not auto-jump into `task_plan.md` creation just because a prompt looks complex.
 
+This repo's Codex workflow can also use read-only custom subagents from `.codex/agents/` after planning is complete:
+- `research`
+- `verification`
+- `review-test`
+
+The main agent owns all writes to code and to the planning files. These read-only subagents are for post-planning research, verification, and review only, and they should return summaries for the main agent to merge.
+
 <details>
 <summary><strong>🔧 Claude Code Plugin (Advanced Features)</strong></summary>
 
@@ -353,6 +360,8 @@ planning-with-files/
 │   └── skills/
 │       └── planning-with-files/
 ├── .codex/                  # Codex CLI skills + hooks
+│   ├── agents/              # Custom readonly subagents (research, verification, review-test)
+│   ├── config.toml          # Codex model + [agents] limits
 │   └── skills/
 ├── .opencode/               # OpenCode skills (custom session storage)
 │   └── skills/

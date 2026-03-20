@@ -89,6 +89,25 @@ Filesystem = Disk (persistent, unlimited)
 | `findings.md` | Research, discoveries | After ANY discovery |
 | `progress.md` | Session log, test results | Throughout session |
 
+## Codex Readonly Subagent Workflow
+
+For Codex, the main agent owns all writes to code and to the planning files.
+
+Only after planning files exist may the main agent delegate read-heavy work to the readonly custom subagents in `.codex/agents/`:
+- `research`
+- `verification`
+- `review-test`
+
+These subagents are for post-planning execution support only. They may inspect code, docs, tests, and configuration, but they may not edit code and may not write `task_plan.md`, `findings.md`, or `progress.md`.
+
+Each subagent should return a concise summary using this structure:
+- Scope checked
+- Findings
+- Risks
+- Recommended next action
+
+The main agent reviews that summary, decides what to do next, and records any accepted results in the planning files.
+
 ## Critical Rules
 
 ### 1. Create Plan First
