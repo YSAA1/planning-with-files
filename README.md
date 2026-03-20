@@ -165,6 +165,16 @@ npx skills add OthmanAdi/planning-with-files --skill planning-with-files-zh -g
 
 Works with Claude Code, Cursor, Codex, Gemini CLI, and 40+ agents supporting the [Agent Skills](https://agentskills.io) spec.
 
+### Codex Workflow
+
+For Codex, use the explicit `manus-*` slash commands instead of relying on implicit planning triggers:
+
+- `/manus-brainstorm` — discuss the task before creating any planning files
+- `/manus-plan` — start the planning workflow after brainstorming or after explicit confirmation
+- `/manus-status` — inspect the current plan-file state
+
+The Codex-facing skills set `allow_implicit_invocation: false`, so Codex does not auto-jump into `task_plan.md` creation just because a prompt looks complex.
+
 <details>
 <summary><strong>🔧 Claude Code Plugin (Advanced Features)</strong></summary>
 

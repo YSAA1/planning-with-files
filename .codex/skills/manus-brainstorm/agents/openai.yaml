@@ -1,0 +1,5 @@
+interface:
+  display_name: "Manus Brainstorm"
+  short_description: "Discuss a task before creating any planning files."
+policy:
+  allow_implicit_invocation: false
