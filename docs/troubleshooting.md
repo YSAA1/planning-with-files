@@ -78,6 +78,30 @@ Create task_plan.md, findings.md, and progress.md here.
 
 ---
 
+## Codex subagents should not write planning files
+
+**Issue:** A Codex subagent created or tried to update `task_plan.md`, `findings.md`, or `progress.md`.
+
+**Why this happens:** The main agent owns the planning files. Subagents should not write planning files; they should return summaries that the main agent reviews and merges.
+
+**Solutions:**
+
+### Solution 1: Keep custom subagents readonly
+
+Define Codex subagents in `.codex/agents/` with `sandbox_mode = "read-only"` when they are only meant for research, verification, or review.
+
+### Solution 2: Delegate only post-planning work
+
+Use subagents only after the main agent has already created the planning files and moved into implementation, verification, or review.
+
+### Solution 3: Merge through the main agent
+
+Have the subagent return a concise summary, then let the main agent decide what belongs in `task_plan.md`, `findings.md`, and `progress.md`.
+
+**Reminder:** In the Codex workflow, the main agent owns all writes to planning files.
+
+---
+
 ## Files not persisting between sessions
 
 **Issue:** Planning files seem to disappear or aren't found when resuming work.

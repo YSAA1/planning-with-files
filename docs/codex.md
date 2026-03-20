@@ -57,12 +57,30 @@ Why these names?
 - Codex already has built-in `/plan`, `/plan-mode`, and `/status` commands.
 - The `manus-*` names avoid collisions with native Codex commands in both CLI and app surfaces.
 
+## Readonly Subagents
+
+Codex custom subagents are defined as standalone TOML files under `.codex/agents/`, while skills stay in `.codex/skills/`.
+
+This repo's Codex setup uses three readonly subagents for post-planning delegation:
+- `research` — codebase exploration, documentation lookup, and evidence gathering
+- `verification` — read-only validation and consistency checks
+- `review-test` — correctness, regression-risk, and missing-test review
+
+Important boundaries:
+- The main agent owns all writes to code and to `task_plan.md`, `findings.md`, and `progress.md`.
+- These readonly subagents are for post-planning work only.
+- Use them for read-heavy tasks such as research, verification, and review.
+- Do not use them to create planning files or edit code.
+
+Parallelism limits live in `.codex/config.toml` under `[agents]`. In this repo, `max_threads` is set to `6` and `max_depth` is set to `1`.
+
 ## Behavior Notes
 
 - `manus-brainstorm` does not create `task_plan.md`, `findings.md`, or `progress.md`.
 - `manus-plan` uses a soft gate: if there is no recent `Brainstorm Summary`, it recommends `/manus-brainstorm` first and asks whether to continue before creating planning files.
 - `manus-plan` is a thin wrapper around the internal `planning-with-files` skill, similar to the soft command style used by Claude command entrypoints.
 - `planning-with-files` remains available as the internal planning skill, but it is no longer the recommended direct Codex entrypoint.
+- After planning files exist, the main agent may delegate read-heavy work to `research`, `verification`, and `review-test`, then merge accepted summaries back into the planning files.
 
 ## Explicit Invocation
 
@@ -80,6 +98,9 @@ Enabled skills also appear in Codex's slash command list, so most users can just
 ls -la ~/.codex/skills/manus-brainstorm/SKILL.md
 ls -la ~/.codex/skills/manus-plan/SKILL.md
 ls -la ~/.codex/skills/manus-status/SKILL.md
+ls -la .codex/agents/research.toml
+ls -la .codex/agents/verification.toml
+ls -la .codex/agents/review-test.toml
 ```
 
 ## Learn More
