@@ -103,6 +103,12 @@ class CodexSubagentWorkflowTests(unittest.TestCase):
 
         self.assertIn("main agent", readme.lower())
         self.assertIn("planning files", readme.lower())
+        self.assertIn("read-only", readme.lower())
+        self.assertIn("after planning is complete", readme.lower())
+        self.assertIn("research", readme)
+        self.assertIn("verification", readme)
+        self.assertIn("review-test", readme)
+        self.assertIn("summaries", readme.lower())
 
     def test_troubleshooting_warns_subagents_not_to_write_planning_files(self):
         troubleshooting = read_text(REPO_ROOT / "docs" / "troubleshooting.md")
