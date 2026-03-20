@@ -62,6 +62,13 @@ class CodexSubagentWorkflowTests(unittest.TestCase):
             for nickname in nicknames:
                 self.assertTrue(nickname.isascii(), nickname)
 
+    def test_research_agent_has_openai_docs_mcp(self):
+        config = read_toml(CODEX_AGENTS / "research.toml")
+        mcp_servers = config.get("mcp_servers", {})
+        docs_server = mcp_servers.get("openaiDeveloperDocs", {})
+
+        self.assertEqual("https://developers.openai.com/mcp", docs_server.get("url"))
+
     def test_manus_plan_limits_subagents_to_post_planning_execution(self):
         body = read_text(CODEX_SKILLS / "manus-plan" / "SKILL.md")
 

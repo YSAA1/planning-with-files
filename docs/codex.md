@@ -66,6 +66,8 @@ This repo's Codex setup uses three readonly subagents for post-planning delegati
 - `verification` — read-only validation and consistency checks
 - `review-test` — correctness, regression-risk, and missing-test review
 
+The `research` agent includes the `openaiDeveloperDocs` MCP server so it can verify OpenAI and Codex behavior against official docs when needed.
+
 Important boundaries:
 - The main agent owns all writes to code and to `task_plan.md`, `findings.md`, and `progress.md`.
 - These readonly subagents are for post-planning work only.

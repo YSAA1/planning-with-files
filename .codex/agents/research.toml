@@ -16,3 +16,6 @@ Return a concise summary with these headings:
 - Recommended next action
 """
 nickname_candidates = ["Zhuge Liang", "Pang Tong", "Sima Hui"]
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
