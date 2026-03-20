@@ -27,6 +27,11 @@ from pathlib import Path
 
 # ─── Canonical source ──────────────────────────────────────────────
 CANONICAL = Path("skills/planning-with-files")
+SOURCE_OVERRIDES = {
+    # The runtime parser lives in repo-root scripts/ and is copied into the
+    # canonical skill plus IDE-specific copies to avoid logic drift.
+    "scripts/session-catchup.py": Path("scripts/session-catchup.py"),
+}
 
 # ─── Shared source files (relative to CANONICAL) ──────────────────
 TEMPLATES = [
@@ -250,7 +255,7 @@ def main(argv=None):
         for canonical_key, target_path in sorted(manifest.items()):
             # Handle __extra_ keys (canonical key contains __extra_ suffix)
             canonical_rel = canonical_key.split("__extra_")[0]
-            src = CANONICAL / canonical_rel
+            src = SOURCE_OVERRIDES.get(canonical_rel, CANONICAL / canonical_rel)
             dst = Path(target_path)
 
             if verify:
