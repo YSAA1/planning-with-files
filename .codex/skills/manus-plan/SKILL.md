@@ -25,5 +25,11 @@ Then:
 - follow it exactly as presented.
 - Create planning files in the current project directory, not in the skill directory.
 - Keep the workflow in the same language the user is already using.
+- Do not spawn any subagent during brainstorming or initial planning-file creation.
+- After planning files exist and the task has moved into execution, review, or verification work, the main agent may delegate read-heavy tasks to the custom subagents defined in `.codex/agents/research.toml`, `.codex/agents/verification.toml`, and `.codex/agents/review-test.toml`.
+- Those subagents are readonly helpers for post-planning execution support only.
+- Subagents may not edit code.
+- Subagents may not write `task_plan.md`, `findings.md`, or `progress.md`.
+- The main agent owns all writes and merges subagent summaries back into the planning files.
 
 If the user decides not to continue yet, stop and recommend `/manus-brainstorm`.
